@@ -66,7 +66,7 @@ while True:
     
     screen.blit(explosion_image, explosion_pos)
     
-    #(Line 52) To add position counter uncomment lines 54-58 and comment line 59
+    #(Line 52) To add position counter uncomment next three lines and comment y = 10
 
     #y = 10
     
