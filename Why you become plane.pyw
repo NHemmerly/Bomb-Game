@@ -16,7 +16,7 @@ filename = "explosion.png"
 image_path = os.path.join(subdirectory, filename)
 
 #screen_fill = screen.fill((104, 50, 39))
-explosion_image = pygame.image.load("images\Bomb.png")
+explosion_image = pygame.image.load("images/Bomb.png")
 
 explosion_pos = (50, 100)
 explosion_vel = (2.5, 3)
@@ -41,6 +41,7 @@ image_changed = False
 is_plane = False
 is_explode = False
 pause_state = False
+
 
 while True:
 
@@ -85,7 +86,7 @@ while True:
         explosion_vel = (explosion_vel[0], -explosion_vel[1])
 #Plane
     if explosion_pos[0] < 0 or explosion_pos[0] + explosion_image.get_width() > window_size[0]:
-        explosion_image = pygame.image.load("images\plane.jfif")
+        explosion_image = pygame.image.load("images/plane.png")
         explosion_vel = (explosion_vel[0], explosion_vel[1])
         image_changed = True
         is_plane = True
@@ -99,7 +100,7 @@ while True:
 #    mirrored_image = pygame.transform.flip("images\plane.jfif", False, True)
 #Explosion
     if explosion_pos[1] + explosion_image.get_height() > window_size[1]:
-        explosion_image = pygame.image.load("images\explosion.png")
+        explosion_image = pygame.image.load("images/explosion.png")
         explosion_vel = (explosion_vel[0], -explosion_vel[1])
         GroundHits += 1
         # screen_fill = screen.fill ((255, 255, 255))
@@ -144,7 +145,7 @@ while True:
 
     if image_changed and is_explode:
        if current_time - change_back_start_time >= change_back_time1:
-            explosion_image = pygame.image.load("images\\bomb.png")
+            explosion_image = pygame.image.load("images/bomb.png")
             # screen_fill = screen.fill ((217, 37, 18))
             is_explode = False
             image_changed = False
@@ -153,7 +154,7 @@ while True:
         #if explosion_pos[0] < 0 or explosion_pos[0] + explosion_image.get_width() > window_size[0]:
             #explosion_vel = (-explosion_vel[0], explosion_vel[1])
         if current_time - change_back_start_time >= change_back_time2:
-            explosion_image = pygame.image.load("images\\bomb.png")
+            explosion_image = pygame.image.load("images/bomb.png")
         # screen_fill = screen.fill ((104, 50, 39))
             is_plane = False
             image_changed = False
