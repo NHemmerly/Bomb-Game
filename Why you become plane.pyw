@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import os
 
 pygame.init()
 
@@ -10,7 +11,11 @@ screen = pygame.display.set_mode(window_size)
 
 current_time = pygame.time.get_ticks()
 
-explosion_image = pygame.image.load("Bomb.png")
+subdirectory = "Images"
+filename = "explosion.png"
+image_path = os.path.join(subdirectory, filename)
+
+explosion_image = pygame.image.load("images\Bomb.png")
 
 explosion_pos = (50, 100)
 explosion_vel = (2.5, 3)
@@ -45,13 +50,13 @@ while True:
         explosion_vel = (-explosion_vel[0], explosion_vel[1])
 
     if explosion_pos[0] < 0 or explosion_pos[0] + explosion_image.get_width() > window_size[0]:
-        explosion_image = pygame.image.load("plane.jfif")
+        explosion_image = pygame.image.load("images\plane.jfif")
         explosion_vel = (explosion_vel[0], explosion_vel[1])
         image_changed = True
         change_back_start_time = current_time
         
     if explosion_pos[1] + explosion_image.get_height() > window_size[1]:
-        explosion_image = pygame.image.load("explosion.png")
+        explosion_image = pygame.image.load("images\explosion.png")
         explosion_vel = (explosion_vel[0], -explosion_vel[1])
         GroundHits += 1
         image_changed = True
