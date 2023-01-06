@@ -15,7 +15,7 @@ subdirectory = "Images"
 filename = "explosion.png"
 image_path = os.path.join(subdirectory, filename)
 
-# screen_fill = screen.fill((104, 50, 39))
+#screen_fill = screen.fill((104, 50, 39))
 explosion_image = pygame.image.load("images\Bomb.png")
 
 explosion_pos = (50, 100)
@@ -27,16 +27,18 @@ GroundHits = 0
 
 # config
 position_monitor = False
+pause_on_click = False
 
 font = pygame.font.Font(None, 36)
 
 # Set the change back time (in milliseconds)
-# change_back_time1 = 2000
-change_back_time = 500
+change_back_time1 = 2000
+change_back_time2 = 500
 change_back_start_time = 0
 image_changed = False
-# is_plane = False
-# is_explode = False
+is_plane = False
+is_explode = False
+pause_state = False
 
 while True:
 
@@ -44,13 +46,19 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-
+        
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
             mouse_pos = pygame.mouse.get_pos()
 
             if (explosion_pos[0] < mouse_pos[0] < explosion_pos[0] + explosion_image.get_width()) and (explosion_pos[1] < mouse_pos[1] < explosion_pos[1] + explosion_image.get_height()):
-
+                if pause_on_click:
+                   pause_state = not pause_state
+                if pause_state:
+                   explosion_vel = (random.randint(0, 0), random.randint(0, 0))
+                else:
+                   explosion_vel = (random.randint(-5, 5), random.randint(-5, 5))
+            else:
                 explosion_vel = (random.randint(-5, 5), random.randint(-5, 5))
 
     if explosion_pos[0] < 0 or explosion_pos[0] + explosion_image.get_width() > window_size[0]:
@@ -60,7 +68,7 @@ while True:
         explosion_image = pygame.image.load("images\plane.jfif")
         explosion_vel = (explosion_vel[0], explosion_vel[1])
         image_changed = True
-        # is_plane = True
+        is_plane = True
         change_back_start_time = current_time
 
     if explosion_pos[1] + explosion_image.get_height() > window_size[1]:
@@ -69,7 +77,7 @@ while True:
         GroundHits += 1
         # screen_fill = screen.fill ((255, 255, 255))
         image_changed = True
-        # is_explode = True
+        is_explode = True
         change_back_start_time = current_time
 
     elif explosion_pos[1] < 0:
@@ -107,19 +115,18 @@ while True:
         "Ground Hits: " + str(GroundHits), True, (250, 250, 255))
         screen.blit(Hits_Counter, (10, y))
 
-    if image_changed:  # and is_explode:
-        if current_time - change_back_start_time >= change_back_time:
-            explosion_image = pygame.image.load("images\bomb.png")
+    if image_changed and is_explode:
+       if current_time - change_back_start_time >= change_back_time1:
+            explosion_image = pygame.image.load("images\\bomb.png")
             # screen_fill = screen.fill ((104, 50, 39))
-            explosion_rect = explosion_image.get_rect()
-            # is_explode = False
+            is_explode = False
             image_changed = False
 
-    # if image_changed and is_plane:
-       # if current_time - change_back_start_time >= change_back_time:
+    if image_changed and is_plane:
+        if current_time - change_back_start_time >= change_back_time2:
             # screen_fill = screen.fill ((104, 50, 39))
-        #    is_plane = False
-        #    image_changed = False
+            is_plane = False
+            image_changed = False
 
     pygame.display.flip()
 
